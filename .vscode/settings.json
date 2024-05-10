@@ -1,0 +1,14 @@
+{
+	"files.associations": {
+		"so_long.h": "c",
+		"sstream": "c",
+		"fcntl.h": "c",
+		"stdio.h": "c",
+		"stdlib.h": "c",
+		"unistd.h": "c",
+		"mlx.h": "c",
+		"string.h": "c",
+		"libft.h": "c",
+		"get_next_line.h": "c"
+	}
+}

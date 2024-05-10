@@ -1,22 +1,23 @@
 NAME = so_long
 CC = gcc
-PRINTF = ./printf
-SRCS = asd.c  get_next_line.c get_next_line_utils.c
+LIBFTDIR = libft
+LIBFT = $(LIBFTDIR)/libft.a
+SRCS = 
 OBJS := $(SRCS:.c=.o)
 FLAGS = -Wall -Wextra -Werror
 
 all: $(NAME)
 
-$(NAME): $(OBJS)
-	make -C $(PRINTF)
-	$(CC) $(FLAGS) $(NAME).c $(OBJS) -o $(NAME)
+$(NAME): $(OBJS) $(LIBFTDIR) 
+	make -C $(LIBFTDIR) 
+	$(CC) $(FLAGS) $(NAME).c $(OBJS) $(LIBFT)  -o $(NAME)
 
-clean:
+clean: $(OBJS) 
+	make clean -C $(LIBFTDIR)
 	rm -rf $(OBJS)
-	make clean -C $(PRINTF)
 
-fclean:clean
+fclean: clean
+	make fclean -C $(LIBFTDIR)
 	rm -rf $(NAME)
-	make fclean -C $(PRINTF)
 
 re: fclean all
