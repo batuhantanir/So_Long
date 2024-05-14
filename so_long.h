@@ -16,4 +16,10 @@ typedef struct s_map
 	int		height;
 }			t_map;
 
+void		print_map(t_map *map, void *mlx_ptr);
+void		free_map(t_map *map);
+void		get_map(int fd, t_map *map);
+void		*my_realloc(void *ptr, size_t size);
+void		check_map(t_map *map);
+
 #endif
