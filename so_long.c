@@ -6,7 +6,7 @@
 /*   By: btanir <btanir@student.42istanbul.com.tr>  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/09 15:56:46 by btanir            #+#    #+#             */
-/*   Updated: 2024/05/10 18:36:33 by btanir           ###   ########.fr       */
+/*   Updated: 2024/05/14 13:20:55 by btanir           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -68,7 +68,7 @@ void	print_map(t_map *map, void *mlx_ptr)
 
 	i = 0;
 	j = 0;
-	window = mlx_new_window(mlx_ptr, 1920, 1080, "so_long");
+	window = mlx_new_window(mlx_ptr, 1920, 1080, "so_long"); 
 	while (i < map->height)
 	{
 		j = 0;
