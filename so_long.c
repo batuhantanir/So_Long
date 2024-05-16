@@ -6,7 +6,7 @@
 /*   By: btanir <btanir@student.42istanbul.com.tr>  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/09 15:56:46 by btanir            #+#    #+#             */
-/*   Updated: 2024/05/16 17:05:01 by btanir           ###   ########.fr       */
+/*   Updated: 2024/05/16 20:13:54 by btanir           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,6 +38,7 @@ void ft_init(t_map *map)
 	map->height = 0;
 	map->width = 0;
 	map->map = NULL;
+	map->map_copy = NULL;
 	map->mlx_ptr = NULL;
 	map->mlx_win = NULL;
 	map->playerX = 0;
@@ -66,7 +67,7 @@ int	main(int argc, char **argv)
 	close(fd);
 	check_map(map);
 	map->mlx_ptr = mlx_init();
-	print_map(map);
+	// print_map(map);
 	mlx_loop(map->mlx_ptr);
 	system("leaks so_long");
 	free_map(map);

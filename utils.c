@@ -38,13 +38,13 @@ void	check_flood_fill_map(t_map *area)
 	while (i < area->height)
 	{
 		j = 0;
-		while (area->map[i][j] != '\0')
+		while (area->map_copy[i][j] != '\0')
 		{
-			if (area->map[i][j] == 'P')
+			if (area->map_copy[i][j] == 'P')
 				handle_error("Player is not surrounded by walls",-1);
-			if (area->map[i][j] == 'E')
+			if (area->map_copy[i][j] == 'E')
 				handle_error("Exit is not surrounded by walls",-1);
-			if (area->map[i][j] == 'C')
+			if (area->map_copy[i][j] == 'C')
 				handle_error("Collectible is not surrounded by walls",-1);
 			j++;
 		}

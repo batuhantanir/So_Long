@@ -1,5 +1,5 @@
 NAME = so_long
-CC = gcc
+CC = gcc -g
 LIBFTDIR = libft
 LIBFT = $(LIBFTDIR)/libft.a
 MLXDIR = minilibx

@@ -2,27 +2,22 @@
 #include "minilibx/mlx.h"
 #include "so_long.h"
 
-
-void	print_map(t_map *map)
+void	print_map(char **map, int height)
 {
-	int		i;
-	int		j;
-	void	*asd;
+	int	i;
+	int	j;
 
 	i = 0;
 	j = 0;
-	map->mlx_win = mlx_new_window(map->mlx_ptr, 1920, 1080, "so_long");
-	while (i < map->height)
+	while (i < height)
 	{
 		j = 0;
-		while (j < map->width)
+		while (map[i][j] != '\0')
 		{
-			// ft_printf("%s", map->map[i]);
-			asd = mlx_new_image(map->mlx_ptr, 1920, 1080);
-			mlx_put_image_to_window(map->mlx_ptr, map->mlx_win, asd, 0, 0);
-			// mlx_destroy_image(mlx_ptr, asd);
+			ft_printf("%c", map[i][j]);
 			j++;
 		}
+		printf("\n");
 		i++;
 	}
 }
@@ -39,28 +34,84 @@ void	free_map(t_map *map)
 	}
 	free(map->map);
 }
+int	ft_custom_strlen(char *str)
+{
+	int	i;
+
+	i = 0;
+	while (str[i] != '\0' && str[i] != '\n')
+		i++;
+	return (i);
+}
+
+void	copy_line(t_map *map)
+{
+	int	i;
+	int	j;
+
+	i = 0;
+	while (i < map->height)
+	{
+		j = 0;
+		while (map->map[i][j] != '\0' && map->map[i][j] != '\n')
+		{
+			map->map_copy[i][j] = map->map[i][j];
+			j++;
+		}
+		i++;
+	}
+}
+void	add_line(t_map *map, char *line)
+{
+	map->map = (char **)my_realloc(map->map, sizeof(char *) * (map->height
+				+ 1));
+	map->map[map->height] = (char *)malloc(sizeof(char) * (map->width + 1));
+	map->map_copy = (char **)my_realloc(map->map_copy, sizeof(char *)
+			* (map->height + 1));
+	map->map_copy[map->height] = (char *)malloc(sizeof(char) * (map->width
+				+ 1));
+	if (!map->map[map->height] || !map->map || !map->map_copy
+		|| !map->map_copy[map->height])
+		handle_error("Memory allocation failed", -1);
+	ft_memcpy(map->map[map->height], line, map->width);
+	ft_memcpy(map->map_copy[map->height], line, map->width);
+	map->height++;
+}
+void	check_width(char *line, t_map *map)
+{
+	if (map->height == 0)
+	{
+		map->width = ft_custom_strlen(line);
+	}
+	else if (map->width != ft_custom_strlen(line))
+	{
+		free(line);
+		handle_error("Invalid map", -1);
+	}
+}
 
 void	get_map(int fd, t_map *map)
 {
 	char	*line;
+	int		ret;
+	int		i;
 
+	i = 0;
 	while (1)
 	{
 		line = get_next_line(fd);
 		if (line == 0)
 		{
 			free(line);
-			return ;
+			break ;
 		}
-		map->map = my_realloc(map->map, (map->height + 1) * sizeof(char *));
-		map->map[map->height] = line;
-		map->height++;
-		if (map->width == 0 || map->width < ft_strlen(line))
-			map->width = ft_strlen(line);
+		check_width(line, map);
+		add_line(map, line);
 		if (ft_strchr(line, 'P'))
 		{
 			map->playerY = map->height;
 			map->playerX = ft_strchr(line, 'P') - line;
 		}
+		free(line);
 	}
 }

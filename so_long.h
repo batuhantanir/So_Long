@@ -13,6 +13,7 @@ typedef struct s_map
 	void	*mlx_ptr;
 	void	*mlx_win;
 	char	**map;
+	char 	**map_copy;
 	int		width;
 	int		height;
 	int 	playerX;
@@ -28,7 +29,7 @@ typedef struct s_point
 	int y;
 }			t_point;
 
-void		print_map(t_map *map);
+void		print_map(char **map, int height);
 void		free_map(t_map *map);
 void		get_map(int fd, t_map *map);
 void		*my_realloc(void *ptr, size_t size);
