@@ -6,7 +6,7 @@
 /*   By: btanir <btanir@student.42istanbul.com.tr>  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/09 15:56:46 by btanir            #+#    #+#             */
-/*   Updated: 2024/05/15 19:30:21 by btanir           ###   ########.fr       */
+/*   Updated: 2024/05/16 17:05:01 by btanir           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,30 +33,42 @@ void	*my_realloc(void *ptr, size_t size)
 	return (new_ptr);
 }
 
+void ft_init(t_map *map)
+{
+	map->height = 0;
+	map->width = 0;
+	map->map = NULL;
+	map->mlx_ptr = NULL;
+	map->mlx_win = NULL;
+	map->playerX = 0;
+	map->playerY = 0;
+	map->player_count = 0;
+	map->collectible_count = 0;
+	map->exit_count = 0;
+}
+
 int	main(int argc, char **argv)
 {
 	int		fd;
-	t_map	map;
-
+	t_map	*map;
+	
+	
 	if (argc != 2 || strstr(argv[1], ".ber") == NULL)
-	{
-		ft_printf("is executed as: “./so_long *.ber” \n");
-		exit(1);
-	}
+		handle_error("Invalid arguments",-1);
+	map = (t_map *)malloc(sizeof(t_map));
+	if(!map)
+		handle_error("Memory allocation failed",-1);
 	fd = open(argv[1], O_RDONLY);
 	if (fd == -1)
-	{
-		ft_printf("Error asd\n");
-		return (1);
-	}
-	get_map(fd, &map);
+		handle_error("File could not be opened",-1);
+	ft_init(map);
+	get_map(fd, map);
 	close(fd);
-	check_map(&map);
-	map.mlx_ptr = mlx_init();
-	print_map(&map);
-	mlx_loop(map.mlx_ptr);
+	check_map(map);
+	map->mlx_ptr = mlx_init();
+	print_map(map);
+	mlx_loop(map->mlx_ptr);
 	system("leaks so_long");
-	free_map(&map);
-	system("leaks so_long");
+	free_map(map);
 	return (0);
 }

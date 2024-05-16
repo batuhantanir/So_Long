@@ -4,7 +4,7 @@ LIBFTDIR = libft
 LIBFT = $(LIBFTDIR)/libft.a
 MLXDIR = minilibx
 MLX = $(MLXDIR)/libmlx.a
-SRCS = map.c check_map.c
+SRCS = map.c check_map.c utils.c
 OBJS := $(SRCS:.c=.o)
 FLAGS = -Wall -Wextra -Werror
 FRAMEWORKS = -framework OpenGL -framework AppKit

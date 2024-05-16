@@ -59,8 +59,8 @@ void	get_map(int fd, t_map *map)
 			map->width = ft_strlen(line);
 		if (ft_strchr(line, 'P'))
 		{
-			map->playerX = map->height;
-			map->playerY = ft_strchr(line, 'P') - line;
+			map->playerY = map->height;
+			map->playerX = ft_strchr(line, 'P') - line;
 		}
 	}
 }
