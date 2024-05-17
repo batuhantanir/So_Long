@@ -6,7 +6,7 @@
 /*   By: btanir <btanir@student.42istanbul.com.tr>  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/01 15:58:34 by btanir            #+#    #+#             */
-/*   Updated: 2024/05/17 10:25:08 by btanir           ###   ########.fr       */
+/*   Updated: 2024/05/17 11:59:04 by btanir           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,7 +46,7 @@ char	*ft_itoa(int n)
 	dest[i] = '\0';
 	i--;
 	if (num == 0)
-		return (dest[0] = SPACE, dest);
+		return (dest[0] = '0', dest);
 	else if (0 > num)
 	{
 		dest[0] = '-';
@@ -54,7 +54,7 @@ char	*ft_itoa(int n)
 	}
 	while (num)
 	{
-		dest[i] = (num % 10) + SPACE;
+		dest[i] = (num % 10) + '0';
 		num /= 10;
 		i--;
 	}

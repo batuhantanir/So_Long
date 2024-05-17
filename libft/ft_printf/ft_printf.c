@@ -6,7 +6,7 @@
 /*   By: btanir <btanir@student.42istanbul.com.tr>  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/27 18:45:40 by btanir            #+#    #+#             */
-/*   Updated: 2024/05/17 10:25:29 by btanir           ###   ########.fr       */
+/*   Updated: 2024/05/17 11:59:32 by btanir           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,7 @@ int	ft_converter(char c, va_list arg)
 	int	i;
 
 	i = 0;
-	if (c == COLLECTIBLE)
+	if (c == 'c')
 		i += ft_putchar(va_arg(arg, int));
 	else if (c == 's')
 		i += ft_putstr(va_arg(arg, char *));

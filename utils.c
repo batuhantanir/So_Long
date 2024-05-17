@@ -8,26 +8,31 @@ void	handle_error(char *message, int err_no, t_map *map)
 	exit(err_no);
 }
 
-void	flood_fill(char **area, t_point size, t_point begin)
+void	flood_fill(t_map *map, t_point *begin)
 {
-	if (begin.y < 0 || begin.x < 0 || begin.y >= size.y || begin.x >= size.x)
+	if (begin->x <= 0 || begin->y <= 0 || begin->x >= map->width - 1
+		|| begin->y >= map->height - 1)
 		return ;
-	if (area[begin.y][begin.x] == WALL || area[begin.y][begin.x] == 'F')
-		return ;
-	area[begin.y][begin.x] = 'F';
-	begin.x++;
-	if (begin.x < size.x && area[begin.y][begin.x] != WALL)
-		flood_fill(area, size, begin);
-	begin.x -= 2;
-	if (begin.x > 0 && area[begin.y][begin.x] != WALL)
-		flood_fill(area, size, begin);
-	begin.x++;
-	begin.y++;
-	if (begin.y < size.y - 1 && area[begin.y][begin.x] != WALL)
-		flood_fill(area, size, begin);
-	begin.y -= 2;
-	if (begin.y > 0 && area[begin.y][begin.x] != WALL)
-		flood_fill(area, size, begin);
+	printf("begin->x = %d, begin->y = %d\n", begin->x, begin->y);
+	map->map_copy[begin->y][begin->x] = 'F';
+	begin->x += 1;
+	if (begin->x < map->height && ft_strchr(ELEMENTS_KEK,
+			map->map_copy[begin->y][begin->x]))
+		flood_fill(map, begin);
+	begin->x -= 2;
+	if (begin->x >= 0 && ft_strchr(ELEMENTS_KEK,
+			map->map_copy[begin->y][begin->x]))
+		flood_fill(map, begin);
+	begin->x -= 1;
+	begin->y += 1;
+	if (begin->y < map->width && ft_strchr(ELEMENTS_KEK,
+			map->map_copy[begin->y][begin->x]))
+		flood_fill(map, begin);
+	begin->y -= 2;
+	if (begin->y >= 0 && ft_strchr(ELEMENTS_KEK,
+			map->map_copy[begin->y][begin->x]))
+		flood_fill(map, begin);
+	begin->y += 1;
 }
 
 void	check_flood_fill_map(t_map *map)
@@ -38,15 +43,16 @@ void	check_flood_fill_map(t_map *map)
 
 	while (i < map->height)
 	{
+		printf("map->map_copy[%d] = %s\n", i, map->map_copy[i]);
 		j = 0;
 		while (map->map_copy[i][j] != '\0')
 		{
-			if (map->map_copy[i][j] == PLAYER)
-				handle_error("Player is not surrounded by walls", -1, map);
-			if (map->map_copy[i][j] == EXIT)
-				handle_error("Exit is not surrounded by walls", -1, map);
-			if (map->map_copy[i][j] == COLLECTIBLE)
-				handle_error("Collectible is not surrounded by walls", -1, map);
+			// if (map->map_copy[i][j] == PLAYER)
+			// 	handle_error("Player is not surrounded by walls", -1, map);
+			// if (map->map_copy[i][j] == EXIT)
+			// 	handle_error("Exit is not surrounded by walls", -1, map);
+			// if (map->map_copy[i][j] == COLLECTIBLE)
+			// 	handle_error("Collectible is not surrounded by walls", -1, map);
 			j++;
 		}
 		i++;

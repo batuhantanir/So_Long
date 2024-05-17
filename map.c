@@ -41,6 +41,8 @@ void	add_line(t_map *map, char *line)
 		handle_error("Memory allocation failed", -1, map);
 	ft_memcpy(map->map[map->height], line, map->width);
 	ft_memcpy(map->map_copy[map->height], line, map->width);
+	map->map[map->height][map->width] = '\0';
+	map->map_copy[map->height][map->width] = '\0';
 	map->height++;
 }
 void	check_width(char *line, t_map *map)
@@ -60,8 +62,8 @@ void	player_position(t_map *map, char *line)
 {
 	if (ft_strchr(line, PLAYER))
 	{
-		map->player->y = map->height;
-		map->player->x = ft_strchr(line, PLAYER) - line;
+		map->player.y = map->height - 1;
+		map->player.x = ft_strchr(line, PLAYER) - line;
 	}
 }
 

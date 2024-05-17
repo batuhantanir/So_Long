@@ -6,7 +6,7 @@
 /*   By: btanir <btanir@student.42istanbul.com.tr>  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/01 18:28:08 by btanir            #+#    #+#             */
-/*   Updated: 2024/05/17 10:25:08 by btanir           ###   ########.fr       */
+/*   Updated: 2024/05/17 11:58:58 by btanir           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,10 +29,10 @@ int	ft_atoi(const char *str)
 			sign = -1;
 		i++;
 	}
-	while ((str[i] >= SPACE && str[i] <= '9'))
+	while ((str[i] >= '0' && str[i] <= '9'))
 	{
 		num *= 10;
-		num += str[i] - SPACE;
+		num += str[i] - '0';
 		i++;
 	}
 	return (num * sign);
