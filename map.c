@@ -44,23 +44,6 @@ int	ft_custom_strlen(char *str)
 	return (i);
 }
 
-void	copy_line(t_map *map)
-{
-	int	i;
-	int	j;
-
-	i = 0;
-	while (i < map->height)
-	{
-		j = 0;
-		while (map->map[i][j] != '\0' && map->map[i][j] != '\n')
-		{
-			map->map_copy[i][j] = map->map[i][j];
-			j++;
-		}
-		i++;
-	}
-}
 void	add_line(t_map *map, char *line)
 {
 	map->map = (char **)my_realloc(map->map, sizeof(char *) * (map->height
@@ -90,13 +73,20 @@ void	check_width(char *line, t_map *map)
 	}
 }
 
+void	playe_position(t_map *map, char *line)
+{
+	if (ft_strchr(line, 'P'))
+	{
+		map->playerY = map->height;
+		map->playerX = ft_strchr(line, 'P') - line;
+	}
+}
+
 void	get_map(int fd, t_map *map)
 {
 	char	*line;
-	int		ret;
-	int		i;
+	char	*tmp;
 
-	i = 0;
 	while (1)
 	{
 		line = get_next_line(fd);
@@ -105,13 +95,15 @@ void	get_map(int fd, t_map *map)
 			free(line);
 			break ;
 		}
+		tmp = strdup(line);
 		check_width(line, map);
 		add_line(map, line);
-		if (ft_strchr(line, 'P'))
-		{
-			map->playerY = map->height;
-			map->playerX = ft_strchr(line, 'P') - line;
-		}
+		playe_position(map, tmp);
 		free(line);
+	}
+	if (tmp[map->width] == '\n')
+	{
+		handle_error("Invalid map", -1);
+		free(tmp);
 	}
 }

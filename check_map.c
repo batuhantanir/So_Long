@@ -5,7 +5,7 @@ void	check_bottom(char *line)
 {
 	while (*line != '\0')
 	{
-		if (*line != '1')
+		if (*line != '1' || *line == '\n')
 			handle_error("invalid borderb", -1);
 		line++;
 	}
@@ -21,6 +21,16 @@ void	check_top(char *line)
 	}
 }
 
+void	check_middle(char **map, int height, int width)
+{
+	int	i;
+
+	i = -1;
+	while (++i < height - 1)
+		if (map[i][0] != '1' || map[i][width - 1] != '1')
+			handle_error("invalid borderm", -1);
+		
+}
 void check_item(t_map *map)
 {
 	int i;
@@ -45,17 +55,6 @@ void check_item(t_map *map)
 		}
 		j++;
 	}
-}
-
-void	check_middle(char **map, int height, int width)
-{
-	int	i;
-
-	i = -1;
-	while (++i < height - 1)
-		if (map[i][0] != '1' || map[i][width - 1] != '1')
-			handle_error("invalid borderm", -1);
-		
 }
 
 void	check_map(t_map *map)
