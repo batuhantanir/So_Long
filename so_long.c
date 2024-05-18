@@ -6,7 +6,7 @@
 /*   By: btanir <btanir@student.42istanbul.com.tr>  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/09 15:56:46 by btanir            #+#    #+#             */
-/*   Updated: 2024/05/18 11:15:09 by btanir           ###   ########.fr       */
+/*   Updated: 2024/05/18 12:32:14 by btanir           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -75,6 +75,5 @@ int	main(int argc, char **argv)
 	check_map(map);
 	print_map(map);
 	free_map(map, map->height);
-	system("leaks so_long");
 	return (0);
 }

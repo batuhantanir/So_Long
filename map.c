@@ -58,12 +58,17 @@ void	check_width(char *line, t_map *map)
 	}
 }
 
-void	player_position(t_map *map, char *line)
+void	player_exit_position(t_map *map, char *line)
 {
-	if (ft_strchr(line, PLAYER))
+	if (ft_strchr(line, PLAYER) && map->player.y == 0 && map->player.x == 0)
 	{
 		map->player.y = map->height - 1;
 		map->player.x = ft_strchr(line, PLAYER) - line;
+	}
+	if(ft_strchr(line, EXIT) && map->exit.y == 0 && map->exit.x == 0)
+	{
+		map->exit.y = map->height - 1;
+		map->exit.x = ft_strchr(line, EXIT) - line;
 	}
 }
 
@@ -83,7 +88,8 @@ void	get_map(int fd, t_map *map)
 		tmp = line;
 		check_width(line, map);
 		add_line(map, line);
-		player_position(map, tmp);
+		if(map->player.y == 0 || map->exit.y == 0 || map->player.x == 0 || map->exit.x == 0)
+			player_exit_position(map, tmp);
 		free(line);
 	}
 	if (tmp[map->width] == '\n')

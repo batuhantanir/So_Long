@@ -65,4 +65,5 @@ void	check_map(t_map *map)
 	begin->y = map->player.y;
 	flood_fill(map, begin);
 	check_flood_fill_map(map);
+	free(begin);
 }

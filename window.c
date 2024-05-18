@@ -24,7 +24,6 @@ int	key_event(int keycode, void *param)
 		move_player(map, 1, 0);
 	else if (keycode == KEY_ESC)
 		close_window(map);
-	printf("Moves: %d\n", map->moves);
 	ft_put_imgs(map);
 	return (0);
 }
@@ -71,21 +70,29 @@ void	ft_init_images(t_map *state)
 
 static void	ft_put_img(t_map *state, char c, int x, int y)
 {
-	if (c == '1')
-		mlx_put_image_to_window(state->mlx_ptr, state->mlx_win,
-			state->imgs.img_1, x, y);
-	else if (c == '0')
-		mlx_put_image_to_window(state->mlx_ptr, state->mlx_win,
-			state->imgs.img_0, x, y);
-	else if (c == 'P')
+	mlx_put_image_to_window(state->mlx_ptr, state->mlx_win, state->imgs.img_0,
+		x, y);
+	if (c == 'P')
+	{
+		if (state->exit.y == state->player.y
+			&& state->exit.x == state->player.x)
+			mlx_put_image_to_window(state->mlx_ptr, state->mlx_win,
+				state->imgs.img_E, x, y);
 		mlx_put_image_to_window(state->mlx_ptr, state->mlx_win,
 			state->imgs.img_P, x, y);
-	else if (c == 'C')
-		mlx_put_image_to_window(state->mlx_ptr, state->mlx_win,
-			state->imgs.img_C, x, y);
+	}
 	else if (c == 'E')
 		mlx_put_image_to_window(state->mlx_ptr, state->mlx_win,
 			state->imgs.img_E, x, y);
+	else if (c == 'C')
+		mlx_put_image_to_window(state->mlx_ptr, state->mlx_win,
+			state->imgs.img_C, x, y);
+	else if (c == '0')
+		mlx_put_image_to_window(state->mlx_ptr, state->mlx_win,
+			state->imgs.img_0, x, y);
+	else if (c == '1')
+		mlx_put_image_to_window(state->mlx_ptr, state->mlx_win,
+			state->imgs.img_1, x, y);
 }
 
 void	ft_put_imgs(t_map *state)
@@ -109,20 +116,26 @@ void	move_player(t_map *map, int x, int y)
 {
 	if (map->map[map->player.y + y][map->player.x + x] == '1')
 		return ;
-	if (map->map[map->player.y + y][map->player.x + x] == 'E'
+	if (map->exit.y == map->player.y + y && map->exit.x == map->player.x + x
 		&& map->collectible_count == 0)
+	{
+		ft_printf("You won!\n");
 		close_window(map);
+	}
 	if (map->map[map->player.y + y][map->player.x + x] == 'C')
 	{
 		map->map[map->player.y][map->player.x] = '0';
 		map->collectible_count--;
 	}
-	if(map->map[map->player.y][map->player.x] != 'E')
-		map->map[map->player.y ][map->player.x ] = '0';
+	if (map->map[map->player.y][map->player.x] != 'E')
+		map->map[map->player.y][map->player.x] = '0';
+	if (map->map[map->exit.y][map->exit.x] == '0')
+		map->map[map->exit.y][map->exit.x] = 'E';
 	map->player.x += x;
 	map->player.y += y;
 	map->map[map->player.y][map->player.x] = 'P';
 	map->moves++;
+	ft_printf("Moves: %d\n", map->moves);
 }
 
 void	print_map(t_map *map)

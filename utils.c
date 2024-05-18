@@ -42,7 +42,6 @@ void	check_flood_fill_map(t_map *map)
 
 	while (i < map->height)
 	{
-		printf("map->map_copy[%d] = %s\n", i, map->map_copy[i]);
 		j = 0;
 		while (map->map_copy[i][j] != '\0')
 		{
