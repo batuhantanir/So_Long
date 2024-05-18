@@ -6,7 +6,7 @@
 /*   By: btanir <btanir@student.42istanbul.com.tr>  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/18 13:25:50 by btanir            #+#    #+#             */
-/*   Updated: 2024/05/18 19:51:15 by btanir           ###   ########.fr       */
+/*   Updated: 2024/05/18 21:23:26 by btanir           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,18 +33,13 @@ void	add_line(t_map *map, char *line)
 {
 	map->map = (char **)my_realloc(map->map, sizeof(char *) * (map->height
 				+ 1));
-	map->map[map->height] = (char *)malloc(sizeof(char) * (map->width + 1));
+	map->map[map->height] = ft_strdup(line);
 	map->map_copy = (char **)my_realloc(map->map_copy, sizeof(char *)
 			* (map->height + 1));
-	map->map_copy[map->height] = (char *)malloc(sizeof(char) * (map->width
-				+ 1));
+	map->map_copy[map->height] = ft_strdup(line);
 	if (!map->map[map->height] || !map->map || !map->map_copy
 		|| !map->map_copy[map->height])
 		handle_error("Memory allocation failed", -1, map);
-	ft_memcpy(map->map[map->height], line, map->width);
-	ft_memcpy(map->map_copy[map->height], line, map->width);
-	map->map[map->height][map->width] = '\0';
-	map->map_copy[map->height][map->width] = '\0';
 	map->height++;
 }
 
