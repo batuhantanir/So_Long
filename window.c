@@ -15,25 +15,13 @@ int	key_event(int keycode, void *param)
 
 	map = (t_map *)param;
 	if (keycode == KEY_W || keycode == KEY_UP)
-	{
 		move_player(map, 0, -1);
-		printf("W");
-	}
 	else if (keycode == KEY_S || keycode == KEY_DOWN)
-	{
 		move_player(map, 0, 1);
-		printf("S");
-	}
 	else if (keycode == KEY_A || keycode == KEY_LEFT)
-	{
 		move_player(map, -1, 0);
-		printf("A");
-	}
 	else if (keycode == KEY_D || keycode == KEY_RIGHT)
-	{
 		move_player(map, 1, 0);
-		printf("D");
-	}
 	else if (keycode == KEY_ESC)
 		close_window(map);
 	printf("Moves: %d\n", map->moves);
@@ -126,10 +114,11 @@ void	move_player(t_map *map, int x, int y)
 		close_window(map);
 	if (map->map[map->player.y + y][map->player.x + x] == 'C')
 	{
-		map->map[map->player.y + y][map->player.x + x] = '0';
+		map->map[map->player.y][map->player.x] = '0';
 		map->collectible_count--;
 	}
-	map->map[map->player.y][map->player.x] = '0';
+	if(map->map[map->player.y][map->player.x] != 'E')
+		map->map[map->player.y ][map->player.x ] = '0';
 	map->player.x += x;
 	map->player.y += y;
 	map->map[map->player.y][map->player.x] = 'P';
