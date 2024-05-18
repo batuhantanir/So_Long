@@ -1,10 +1,10 @@
 NAME = so_long
-CC = gcc -g
+CC = gcc
 LIBFTDIR = libft
 LIBFT = $(LIBFTDIR)/libft.a
 MLXDIR = minilibx
 MLX = $(MLXDIR)/libmlx.a
-SRCS = map.c check_map.c utils.c window.c
+SRCS = map.c check_map.c utils.c window.c move_player.c 
 OBJS := $(SRCS:.c=.o)
 FLAGS = -Wall -Wextra -Werror
 FRAMEWORKS = -framework OpenGL -framework AppKit
@@ -18,7 +18,7 @@ $(NAME): $(OBJS) $(LIBFTDIR)
 
 clean: 
 	rm -rf $(OBJS)
-	# make clean -C $(MLXDIR)
+	make clean -C $(MLXDIR)
 	make clean -C $(LIBFTDIR)
 
 fclean: clean

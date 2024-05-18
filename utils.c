@@ -1,5 +1,17 @@
-#include "libft/libft.h"
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   utils.c                                            :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: btanir <btanir@student.42istanbul.com.tr>  +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2024/05/18 13:29:21 by btanir            #+#    #+#             */
+/*   Updated: 2024/05/18 13:44:33 by btanir           ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "so_long.h"
+#include "minilibx/mlx.h"
 
 void	handle_error(char *message, int err_no, t_map *map)
 {
@@ -8,10 +20,27 @@ void	handle_error(char *message, int err_no, t_map *map)
 	exit(err_no);
 }
 
+int	ft_custom_strlen(char *str)
+{
+	int	i;
+
+	i = 0;
+	while (str[i] != '\0' && str[i] != '\n')
+		i++;
+	return (i);
+}
+
+int	close_window(t_map *map)
+{
+	free_map(map, map->height);
+	mlx_destroy_window(map->mlx_ptr, map->mlx_win);
+	exit(0);
+}
+
 void	flood_fill(t_map *map, t_point *begin)
 {
-	if (begin->x <= 0 || begin->y <= 0 || begin->x >= map->width 
-		|| begin->y >= map->height )
+	if (begin->x <= 0 || begin->y <= 0 || begin->x >= map->width
+		|| begin->y >= map->height)
 		return ;
 	map->map_copy[begin->y][begin->x] = 'F';
 	begin->x += 1;
@@ -36,10 +65,10 @@ void	flood_fill(t_map *map, t_point *begin)
 
 void	check_flood_fill_map(t_map *map)
 {
-	int i;
-	int j;
-	i = 0;
+	int	i;
+	int	j;
 
+	i = 0;
 	while (i < map->height)
 	{
 		j = 0;

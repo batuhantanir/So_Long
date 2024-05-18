@@ -6,17 +6,13 @@
 /*   By: btanir <btanir@student.42istanbul.com.tr>  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/17 11:40:55 by btanir            #+#    #+#             */
-/*   Updated: 2024/05/17 17:22:13 by btanir           ###   ########.fr       */
+/*   Updated: 2024/05/18 13:44:41 by btanir           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef SO_LONG_H
 # define SO_LONG_H
-# include <fcntl.h>
-# include <stdio.h>
-# include <stdlib.h>
-# include <string.h>
-# include <unistd.h>
+#include "libft/libft.h"
 
 typedef struct s_point
 {
@@ -26,11 +22,11 @@ typedef struct s_point
 
 typedef struct s_imgs
 {
-	void	*img_E;
-	void	*img_P;
+	void	*img_empty;
+	void	*img_player;
 	void	*img_1;
 	void	*img_0;
-	void	*img_C;
+	void	*img_collectible;
 }			t_imgs;
 
 typedef struct s_map
@@ -78,5 +74,15 @@ void		flood_fill(t_map *map, t_point *begin);
 void		check_flood_fill_map(t_map *area);
 void		move_player(t_map *map, int x, int y);
 void		ft_put_imgs(t_map *state);
-
+int			ft_custom_strlen(char *str);
+int			close_window(t_map *map);
+void		ft_init_images(t_map *state);
+void		create_window(t_map *map);
+void		ft_init(t_map *map);
+int			key_event(int keycode, void *param);
+int			check_map_name(char *map_name);
+int			main(int argc, char **argv);
+void		add_line(t_map *map, char *line);
+void		check_width(char *line, t_map *map);
+void		player_exit_position(t_map *map, char *line);
 #endif

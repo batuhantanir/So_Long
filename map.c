@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   map.c                                              :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: btanir <btanir@student.42istanbul.com.tr>  +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2024/05/18 13:25:50 by btanir            #+#    #+#             */
+/*   Updated: 2024/05/18 13:28:50 by btanir           ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "libft/libft.h"
 #include "minilibx/mlx.h"
 #include "so_long.h"
@@ -15,16 +27,6 @@ void	free_map(t_map *map, int height)
 	}
 	free(map->map);
 	free(map->map_copy);
-}
-
-int	ft_custom_strlen(char *str)
-{
-	int	i;
-
-	i = 0;
-	while (str[i] != '\0' && str[i] != '\n')
-		i++;
-	return (i);
 }
 
 void	add_line(t_map *map, char *line)
@@ -45,6 +47,7 @@ void	add_line(t_map *map, char *line)
 	map->map_copy[map->height][map->width] = '\0';
 	map->height++;
 }
+
 void	check_width(char *line, t_map *map)
 {
 	if (map->height == 0)
@@ -65,7 +68,7 @@ void	player_exit_position(t_map *map, char *line)
 		map->player.y = map->height - 1;
 		map->player.x = ft_strchr(line, PLAYER) - line;
 	}
-	if(ft_strchr(line, EXIT) && map->exit.y == 0 && map->exit.x == 0)
+	if (ft_strchr(line, EXIT) && map->exit.y == 0 && map->exit.x == 0)
 	{
 		map->exit.y = map->height - 1;
 		map->exit.x = ft_strchr(line, EXIT) - line;
@@ -88,7 +91,8 @@ void	get_map(int fd, t_map *map)
 		tmp = line;
 		check_width(line, map);
 		add_line(map, line);
-		if(map->player.y == 0 || map->exit.y == 0 || map->player.x == 0 || map->exit.x == 0)
+		if (map->player.y == 0 || map->exit.y == 0 || map->player.x == 0
+			|| map->exit.x == 0)
 			player_exit_position(map, tmp);
 		free(line);
 	}

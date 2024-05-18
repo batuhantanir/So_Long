@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   check_map.c                                        :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: btanir <btanir@student.42istanbul.com.tr>  +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2024/05/18 13:39:04 by btanir            #+#    #+#             */
+/*   Updated: 2024/05/18 15:17:58 by btanir           ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "libft/libft.h"
 #include "so_long.h"
 
@@ -20,6 +32,7 @@ void	check_middle(t_map *map, int height, int width)
 		if (map->map_copy[i][0] != WALL || map->map_copy[i][width - 1] != WALL)
 			handle_error("invalid borderm", -1, map);
 }
+
 void	check_item(t_map *map)
 {
 	int	i;
@@ -47,7 +60,8 @@ void	check_item(t_map *map)
 
 void	check_map(t_map *map)
 {
-	t_point *begin;
+	t_point	*begin;
+
 	if (map->height < 3 || map->width < 3)
 		handle_error("Map is too small", -1, map);
 	check_item(map);
