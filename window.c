@@ -6,7 +6,7 @@
 /*   By: btanir <btanir@student.42istanbul.com.tr>  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/18 13:29:51 by btanir            #+#    #+#             */
-/*   Updated: 2024/05/18 13:40:31 by btanir           ###   ########.fr       */
+/*   Updated: 2024/05/18 18:54:03 by btanir           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,17 +65,17 @@ void	ft_init_images(t_map *state)
 	int	y;
 
 	state->imgs.img_player = mlx_xpm_file_to_image(state->mlx_ptr,
-			"textures/player1.xpm", &x, &y);
+			"textures/player.xpm", &x, &y);
 	if (!state->imgs.img_player)
-		handle_error("textures/player1.xpm' file cannot be found", -1, state);
+		handle_error("textures/player.xpm' file cannot be found", -1, state);
 	state->imgs.img_empty = mlx_xpm_file_to_image(state->mlx_ptr,
 			"textures/exit.xpm", &x, &y);
 	if (!state->imgs.img_empty)
 		handle_error("textures/exit.xpm' file cannot be found", -1, state);
 	state->imgs.img_collectible = mlx_xpm_file_to_image(state->mlx_ptr,
-			"textures/diamond.xpm", &x, &y);
+			"textures/collectible.xpm", &x, &y);
 	if (!state->imgs.img_collectible)
-		handle_error("textures/diamond.xpm' file cannot be found", -1, state);
+		handle_error("textures/collectible.xpm' file cannot be found", -1, state);
 	state->imgs.img_0 = mlx_xpm_file_to_image(state->mlx_ptr,
 			"textures/floor.xpm", &x, &y);
 	if (!state->imgs.img_0)
