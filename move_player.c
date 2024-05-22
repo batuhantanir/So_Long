@@ -6,7 +6,7 @@
 /*   By: btanir <btanir@student.42istanbul.com.tr>  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/18 13:36:18 by btanir            #+#    #+#             */
-/*   Updated: 2024/05/18 13:37:17 by btanir           ###   ########.fr       */
+/*   Updated: 2024/05/22 11:20:11 by btanir           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,7 +38,8 @@ void	move_player(t_map *map, int x, int y)
 	if (map->exit.y == map->player.y + y && map->exit.x == map->player.x + x
 		&& map->collectible_count == 0)
 	{
-		ft_printf("You won!\n");
+		map->moves++;
+		ft_printf("Moves: %d\nYou won!\n", map->moves);
 		close_window(map);
 	}
 	if (map->map[map->player.y + y][map->player.x + x] == 'C')

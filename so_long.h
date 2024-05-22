@@ -6,13 +6,13 @@
 /*   By: btanir <btanir@student.42istanbul.com.tr>  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/17 11:40:55 by btanir            #+#    #+#             */
-/*   Updated: 2024/05/18 13:44:41 by btanir           ###   ########.fr       */
+/*   Updated: 2024/05/22 11:18:41 by btanir           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef SO_LONG_H
 # define SO_LONG_H
-#include "libft/libft.h"
+# include "libft/libft.h"
 
 typedef struct s_point
 {

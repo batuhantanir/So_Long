@@ -6,7 +6,7 @@
 /*   By: btanir <btanir@student.42istanbul.com.tr>  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/18 13:29:21 by btanir            #+#    #+#             */
-/*   Updated: 2024/05/18 13:44:33 by btanir           ###   ########.fr       */
+/*   Updated: 2024/05/22 11:20:58 by btanir           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,7 @@
 
 void	handle_error(char *message, int err_no, t_map *map)
 {
-	ft_printf("%s\n", message);
+	ft_printf("Error: %s\n", message);
 	free_map(map, map->height);
 	exit(err_no);
 }

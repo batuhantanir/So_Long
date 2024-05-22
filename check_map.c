@@ -6,7 +6,7 @@
 /*   By: btanir <btanir@student.42istanbul.com.tr>  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/18 13:39:04 by btanir            #+#    #+#             */
-/*   Updated: 2024/05/18 15:17:58 by btanir           ###   ########.fr       */
+/*   Updated: 2024/05/22 11:28:22 by btanir           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,6 +64,8 @@ void	check_map(t_map *map)
 
 	if (map->height < 3 || map->width < 3)
 		handle_error("Map is too small", -1, map);
+	else if (map->height > 32 || map->width > 32)
+		handle_error("Map is too big", -1, map);
 	check_item(map);
 	if (map->player_count != 1 || map->player.x == 0 || map->player.y == 0)
 		handle_error("Player count is not 1", -1, map);
