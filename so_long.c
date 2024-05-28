@@ -6,7 +6,7 @@
 /*   By: btanir <btanir@student.42istanbul.com.tr>  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/09 15:56:46 by btanir            #+#    #+#             */
-/*   Updated: 2024/05/22 11:18:02 by btanir           ###   ########.fr       */
+/*   Updated: 2024/05/28 17:06:39 by btanir           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -89,7 +89,10 @@ int	main(int argc, char **argv)
 		handle_error("Memory allocation failed", -1, map);
 	fd = open(argv[1], O_RDONLY);
 	if (fd == -1)
-		handle_error("File could not be opened", -1, map);
+	{
+		ft_printf("Error: file open error\n");
+		exit(-1);
+	}
 	ft_init(map);
 	get_map(fd, map);
 	close(fd);
