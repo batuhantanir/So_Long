@@ -18,7 +18,7 @@ $(NAME): $(OBJS) $(LIBFTDIR)
 
 clean: 
 	rm -rf $(OBJS)
-	# make clean -C $(MLXDIR)
+	make clean -C $(MLXDIR)
 	make clean -C $(LIBFTDIR)
 
 fclean: clean
