@@ -6,69 +6,16 @@
 /*   By: btanir <btanir@student.42istanbul.com.tr>  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/18 13:25:50 by btanir            #+#    #+#             */
-/*   Updated: 2024/05/22 11:16:39 by btanir           ###   ########.fr       */
+/*   Updated: 2024/06/01 12:46:41 by btanir           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "libft/libft.h"
 #include "minilibx/mlx.h"
 #include "so_long.h"
 
-void	free_map(t_map *map, int height)
-{
-	int	i;
-
-	i = 0;
-	while (i < height)
-	{
-		free(map->map[i]);
-		free(map->map_copy[i]);
-		i++;
-	}
-	free(map->map);
-	free(map->map_copy);
-}
-
-void	add_line(t_map *map, char *line)
-{
-	map->map = (char **)my_realloc(map->map, sizeof(char *) * (map->height
-				+ 1));
-	map->map[map->height] = ft_strdup(line);
-	map->map_copy = (char **)my_realloc(map->map_copy, sizeof(char *)
-			* (map->height + 1));
-	map->map_copy[map->height] = ft_strdup(line);
-	if (!map->map[map->height] || !map->map || !map->map_copy
-		|| !map->map_copy[map->height])
-		handle_error("Memory allocation failed", -1, map);
-	map->height++;
-}
-
-void	check_width(char *line, t_map *map)
-{
-	if (map->height == 0)
-	{
-		map->width = ft_custom_strlen(line);
-	}
-	else if (map->width != ft_custom_strlen(line))
-	{
-		free(line);
-		handle_error("Invalid map", -1, map);
-	}
-}
-
-void	player_exit_position(t_map *map, char *line)
-{
-	if (ft_strchr(line, PLAYER) && map->player.y == 0 && map->player.x == 0)
-	{
-		map->player.y = map->height - 1;
-		map->player.x = ft_strchr(line, PLAYER) - line;
-	}
-	if (ft_strchr(line, EXIT) && map->exit.y == 0 && map->exit.x == 0)
-	{
-		map->exit.y = map->height - 1;
-		map->exit.x = ft_strchr(line, EXIT) - line;
-	}
-}
+static void	check_width(char *line, t_map *map);
+static void	add_line(t_map *map, char *line);
+static void	player_exit_position(t_map *map, char *line);
 
 void	get_map(int fd, t_map *map)
 {
@@ -95,5 +42,46 @@ void	get_map(int fd, t_map *map)
 	{
 		handle_error("Invalid map", -1, map);
 		free(tmp);
+	}
+}
+
+static void	check_width(char *line, t_map *map)
+{
+	if (map->height == 0)
+	{
+		map->width = ft_custom_strlen(line);
+	}
+	else if (map->width != ft_custom_strlen(line))
+	{
+		free(line);
+		handle_error("Invalid map", -1, map);
+	}
+}
+
+static void	add_line(t_map *map, char *line)
+{
+	map->map = (char **)my_realloc(map->map, sizeof(char *) * (map->height
+				+ 1));
+	map->map[map->height] = ft_strdup(line);
+	map->map_copy = (char **)my_realloc(map->map_copy, sizeof(char *)
+			* (map->height + 1));
+	map->map_copy[map->height] = ft_strdup(line);
+	if (!map->map[map->height] || !map->map || !map->map_copy
+		|| !map->map_copy[map->height])
+		handle_error("Memory allocation failed", -1, map);
+	map->height++;
+}
+
+static void	player_exit_position(t_map *map, char *line)
+{
+	if (ft_strchr(line, PLAYER) && map->player.y == 0 && map->player.x == 0)
+	{
+		map->player.y = map->height - 1;
+		map->player.x = ft_strchr(line, PLAYER) - line;
+	}
+	if (ft_strchr(line, EXIT) && map->exit.y == 0 && map->exit.x == 0)
+	{
+		map->exit.y = map->height - 1;
+		map->exit.x = ft_strchr(line, EXIT) - line;
 	}
 }

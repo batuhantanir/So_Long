@@ -6,12 +6,46 @@
 /*   By: btanir <btanir@student.42istanbul.com.tr>  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/18 13:29:21 by btanir            #+#    #+#             */
-/*   Updated: 2024/05/22 11:20:58 by btanir           ###   ########.fr       */
+/*   Updated: 2024/06/01 12:47:59 by btanir           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "so_long.h"
 #include "minilibx/mlx.h"
+#include "so_long.h"
+
+void	*my_realloc(void *ptr, size_t size)
+{
+	void	*new_ptr;
+
+	new_ptr = malloc(size);
+	if (!new_ptr)
+	{
+		ft_printf("reallocation failed!\n");
+		free(ptr);
+		exit(EXIT_FAILURE);
+	}
+	if (ptr)
+	{
+		ft_memcpy(new_ptr, ptr, size);
+		free(ptr);
+	}
+	return (new_ptr);
+}
+
+void	free_map(t_map *map, int height)
+{
+	int	i;
+
+	i = 0;
+	while (i < height)
+	{
+		free(map->map[i]);
+		free(map->map_copy[i]);
+		i++;
+	}
+	free(map->map);
+	free(map->map_copy);
+}
 
 void	handle_error(char *message, int err_no, t_map *map)
 {
@@ -32,56 +66,8 @@ int	ft_custom_strlen(char *str)
 
 int	close_window(t_map *map)
 {
+	ft_printf("Exit game!\n");
 	free_map(map, map->height);
 	mlx_destroy_window(map->mlx_ptr, map->mlx_win);
 	exit(0);
-}
-
-void	flood_fill(t_map *map, t_point *begin)
-{
-	if (begin->x <= 0 || begin->y <= 0 || begin->x >= map->width
-		|| begin->y >= map->height)
-		return ;
-	map->map_copy[begin->y][begin->x] = 'F';
-	begin->x += 1;
-	if (begin->x <= map->height && ft_strchr(ELEMENTS_KEK,
-			map->map_copy[begin->y][begin->x]))
-		flood_fill(map, begin);
-	begin->x -= 2;
-	if (begin->x >= 0 && ft_strchr(ELEMENTS_KEK,
-			map->map_copy[begin->y][begin->x]))
-		flood_fill(map, begin);
-	begin->x += 1;
-	begin->y += 1;
-	if (begin->y <= map->width && ft_strchr(ELEMENTS_KEK,
-			map->map_copy[begin->y][begin->x]))
-		flood_fill(map, begin);
-	begin->y -= 2;
-	if (begin->y >= 0 && ft_strchr(ELEMENTS_KEK,
-			map->map_copy[begin->y][begin->x]))
-		flood_fill(map, begin);
-	begin->y += 1;
-}
-
-void	check_flood_fill_map(t_map *map)
-{
-	int	i;
-	int	j;
-
-	i = 0;
-	while (i < map->height)
-	{
-		j = 0;
-		while (map->map_copy[i][j] != '\0')
-		{
-			if (map->map_copy[i][j] == PLAYER)
-				handle_error("Player is not surrounded by walls", -1, map);
-			if (map->map_copy[i][j] == EXIT)
-				handle_error("Exit is not surrounded by walls", -1, map);
-			if (map->map_copy[i][j] == COLLECTIBLE)
-				handle_error("Collectible is not surrounded by walls", -1, map);
-			j++;
-		}
-		i++;
-	}
 }

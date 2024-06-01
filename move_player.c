@@ -6,11 +6,13 @@
 /*   By: btanir <btanir@student.42istanbul.com.tr>  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/18 13:36:18 by btanir            #+#    #+#             */
-/*   Updated: 2024/05/22 11:20:11 by btanir           ###   ########.fr       */
+/*   Updated: 2024/06/01 12:33:24 by btanir           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "so_long.h"
+
+static void	move_player(t_map *map, int x, int y);
 
 int	key_event(int keycode, void *param)
 {
@@ -31,7 +33,7 @@ int	key_event(int keycode, void *param)
 	return (0);
 }
 
-void	move_player(t_map *map, int x, int y)
+static void	move_player(t_map *map, int x, int y)
 {
 	if (map->map[map->player.y + y][map->player.x + x] == '1')
 		return ;

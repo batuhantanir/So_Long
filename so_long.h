@@ -6,7 +6,7 @@
 /*   By: btanir <btanir@student.42istanbul.com.tr>  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/17 11:40:55 by btanir            #+#    #+#             */
-/*   Updated: 2024/05/22 11:18:41 by btanir           ###   ########.fr       */
+/*   Updated: 2024/06/01 12:46:39 by btanir           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -72,17 +72,10 @@ void		check_map(t_map *map);
 void		handle_error(char *message, int err_no, t_map *map);
 void		flood_fill(t_map *map, t_point *begin);
 void		check_flood_fill_map(t_map *area);
-void		move_player(t_map *map, int x, int y);
-void		ft_put_imgs(t_map *state);
 int			ft_custom_strlen(char *str);
 int			close_window(t_map *map);
-void		ft_init_images(t_map *state);
-void		create_window(t_map *map);
-void		ft_init(t_map *map);
 int			key_event(int keycode, void *param);
-int			check_map_name(char *map_name);
 int			main(int argc, char **argv);
-void		add_line(t_map *map, char *line);
-void		check_width(char *line, t_map *map);
-void		player_exit_position(t_map *map, char *line);
+void		ft_put_imgs(t_map *state);
+
 #endif

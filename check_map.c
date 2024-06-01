@@ -6,57 +6,16 @@
 /*   By: btanir <btanir@student.42istanbul.com.tr>  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/18 13:39:04 by btanir            #+#    #+#             */
-/*   Updated: 2024/05/22 11:28:22 by btanir           ###   ########.fr       */
+/*   Updated: 2024/06/01 12:51:15 by btanir           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft/libft.h"
 #include "so_long.h"
 
-void	check_top_bottom(char *line, t_map *map)
-{
-	while (*line == '1')
-	{
-		if (*line != WALL)
-			handle_error("invalid border", -1, map);
-		line++;
-	}
-}
-
-void	check_middle(t_map *map, int height, int width)
-{
-	int	i;
-
-	i = -1;
-	while (++i < height - 1)
-		if (map->map_copy[i][0] != WALL || map->map_copy[i][width - 1] != WALL)
-			handle_error("invalid borderm", -1, map);
-}
-
-void	check_item(t_map *map)
-{
-	int	i;
-	int	j;
-
-	j = 0;
-	while (j < map->height)
-	{
-		i = 0;
-		while (i < map->width - 1)
-		{
-			if (map->map[j][i] == PLAYER)
-				map->player_count++;
-			if (map->map[j][i] == COLLECTIBLE)
-				map->collectible_count++;
-			if (map->map[j][i] == EXIT)
-				map->exit_count++;
-			if (ft_strchr(ELEMENTS, map->map[j][i]) == NULL)
-				handle_error("Invalid item2", -1, map);
-			i++;
-		}
-		j++;
-	}
-}
+static void	check_top_bottom(char *line, t_map *map);
+static void	check_middle(t_map *map, int height, int width);
+static void	check_item(t_map *map);
 
 void	check_map(t_map *map)
 {
@@ -82,4 +41,49 @@ void	check_map(t_map *map)
 	flood_fill(map, begin);
 	check_flood_fill_map(map);
 	free(begin);
+}
+
+static void	check_top_bottom(char *line, t_map *map)
+{
+	while (*line == '1')
+	{
+		if (*line != WALL)
+			handle_error("invalid border", -1, map);
+		line++;
+	}
+}
+
+static void	check_middle(t_map *map, int height, int width)
+{
+	int	i;
+
+	i = -1;
+	while (++i < height - 1)
+		if (map->map_copy[i][0] != WALL || map->map_copy[i][width - 1] != WALL)
+			handle_error("invalid borderm", -1, map);
+}
+
+static void	check_item(t_map *map)
+{
+	int	i;
+	int	j;
+
+	j = 0;
+	while (j < map->height)
+	{
+		i = 0;
+		while (i < map->width - 1)
+		{
+			if (map->map[j][i] == PLAYER)
+				map->player_count++;
+			if (map->map[j][i] == COLLECTIBLE)
+				map->collectible_count++;
+			if (map->map[j][i] == EXIT)
+				map->exit_count++;
+			if (ft_strchr(ELEMENTS, map->map[j][i]) == NULL)
+				handle_error("Invalid item2", -1, map);
+			i++;
+		}
+		j++;
+	}
 }

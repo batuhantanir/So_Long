@@ -6,54 +6,54 @@
 /*   By: btanir <btanir@student.42istanbul.com.tr>  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/09 15:56:46 by btanir            #+#    #+#             */
-/*   Updated: 2024/05/28 17:06:39 by btanir           ###   ########.fr       */
+/*   Updated: 2024/06/01 12:44:10 by btanir           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "libft/libft.h"
 #include "minilibx/mlx.h"
 #include "so_long.h"
 #include <fcntl.h>
 #include <unistd.h>
 
-void	*my_realloc(void *ptr, size_t size)
-{
-	void	*new_ptr;
+static void	check_map_name(char *map_name);
+static void	ft_init(t_map *map);
 
-	new_ptr = malloc(size);
-	if (!new_ptr)
-	{
-		ft_printf("Yeniden boyutlandırma başarısız oldu!\n");
-		free(ptr);
-		exit(EXIT_FAILURE);
-	}
-	if (ptr)
-	{
-		ft_memcpy(new_ptr, ptr, size);
-		free(ptr);
-	}
-	return (new_ptr);
-}
-
-void	print_map(t_map *map)
+int	main(int argc, char **argv)
 {
-	create_window(map);
-	ft_init_images(map);
-	ft_put_imgs(map);
-	mlx_loop(map->mlx_ptr);
-}
+	int		fd;
+	t_map	*map;
 
-int	check_map_name(char *map_name)
-{
-	if (ft_strncmp(map_name + ft_strlen(map_name) - 4, ".ber", 4) != 0)
+	if (argc != 2)
+		return (ft_printf("Error: Must have 2 arguments!\n"), 0);
+	check_map_name(argv[1]);
+	map = (t_map *)malloc(sizeof(t_map));
+	if (!map)
+		handle_error("Error: Memory allocation failed\n", -1, map);
+	fd = open(argv[1], O_RDONLY);
+	if (fd == -1)
 	{
-		ft_printf("Invalid map name\n");
-		exit(EXIT_FAILURE);
+		ft_printf("Error: file open error\n");
+		exit(-1);
 	}
+	ft_init(map);
+	get_map(fd, map);
+	close(fd);
+	check_map(map);
+	print_map(map);
+	free_map(map, map->height);
 	return (0);
 }
 
-void	ft_init(t_map *map)
+static void	check_map_name(char *map_name)
+{
+	if (ft_strncmp(map_name + ft_strlen(map_name) - 4, ".ber", 4) != 0)
+	{
+		ft_printf("Error: Invalid map name\n");
+		exit(EXIT_FAILURE);
+	}
+}
+
+static void	ft_init(t_map *map)
 {
 	map->height = 0;
 	map->width = 0;
@@ -74,30 +74,4 @@ void	ft_init(t_map *map)
 	map->imgs.img_empty = NULL;
 	map->imgs.img_player = NULL;
 	map->imgs.img_collectible = NULL;
-}
-
-int	main(int argc, char **argv)
-{
-	int		fd;
-	t_map	*map;
-
-	if (argc != 2 || ft_strncmp(argv[1] + ft_strlen(argv[1]) - 4, ".ber",
-			4) != 0)
-		return (ft_printf("Must have 2 arguments and map *.ber"), 0);
-	map = (t_map *)malloc(sizeof(t_map));
-	if (!map)
-		handle_error("Memory allocation failed", -1, map);
-	fd = open(argv[1], O_RDONLY);
-	if (fd == -1)
-	{
-		ft_printf("Error: file open error\n");
-		exit(-1);
-	}
-	ft_init(map);
-	get_map(fd, map);
-	close(fd);
-	check_map(map);
-	print_map(map);
-	free_map(map, map->height);
-	return (0);
 }

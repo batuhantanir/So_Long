@@ -6,13 +6,56 @@
 /*   By: btanir <btanir@student.42istanbul.com.tr>  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/18 13:29:51 by btanir            #+#    #+#             */
-/*   Updated: 2024/05/18 18:54:03 by btanir           ###   ########.fr       */
+/*   Updated: 2024/06/01 12:52:20 by btanir           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft/libft.h"
-#include "so_long.h"
 #include "minilibx/mlx.h"
+#include "so_long.h"
+
+static void	create_window(t_map *map);
+static void	ft_init_images(t_map *state);
+static void	ft_put_img(t_map *state, char c, int x, int y);
+
+void	print_map(t_map *map)
+{
+	create_window(map);
+	ft_init_images(map);
+	ft_put_imgs(map);
+	mlx_loop(map->mlx_ptr);
+}
+
+void	ft_put_imgs(t_map *state)
+{
+	int	h;
+	int	w;
+
+	h = 0;
+	while (h < state->height)
+	{
+		w = 0;
+		while (w < state->width)
+		{
+			ft_put_img(state, state->map[h][w], w * 64, h * 64);
+			w++;
+		}
+		h++;
+	}
+}
+
+static void	create_window(t_map *map)
+{
+	map->mlx_ptr = mlx_init();
+	if (!map->mlx_ptr)
+		handle_error("mlx_init failed", -1, map);
+	map->mlx_win = mlx_new_window(map->mlx_ptr, map->width * 64, map->height
+			* 64, "so_long");
+	if (!map->mlx_win)
+		handle_error("mlx_new_window failed", -1, map);
+	mlx_hook(map->mlx_win, 17, 0, close_window, map);
+	mlx_key_hook(map->mlx_win, key_event, map);
+}
 
 static void	ft_put_img(t_map *state, char c, int x, int y)
 {
@@ -41,25 +84,7 @@ static void	ft_put_img(t_map *state, char c, int x, int y)
 			state->imgs.img_1, x, y);
 }
 
-void	ft_put_imgs(t_map *state)
-{
-	int	h;
-	int	w;
-
-	h = 0;
-	while (h < state->height)
-	{
-		w = 0;
-		while (w < state->width)
-		{
-			ft_put_img(state, state->map[h][w], w * 64, h * 64);
-			w++;
-		}
-		h++;
-	}
-}
-
-void	ft_init_images(t_map *state)
+static void	ft_init_images(t_map *state)
 {
 	int	x;
 	int	y;
@@ -75,7 +100,8 @@ void	ft_init_images(t_map *state)
 	state->imgs.img_collectible = mlx_xpm_file_to_image(state->mlx_ptr,
 			"textures/collectible.xpm", &x, &y);
 	if (!state->imgs.img_collectible)
-		handle_error("textures/collectible.xpm' file cannot be found", -1, state);
+		handle_error("textures/collectible.xpm' file cannot be found", -1,
+			state);
 	state->imgs.img_0 = mlx_xpm_file_to_image(state->mlx_ptr,
 			"textures/floor.xpm", &x, &y);
 	if (!state->imgs.img_0)
@@ -84,17 +110,4 @@ void	ft_init_images(t_map *state)
 			"textures/wall.xpm", &x, &y);
 	if (!state->imgs.img_1)
 		handle_error("textures/wall.xpm' file cannot be found", -1, state);
-}
-
-void	create_window(t_map *map)
-{
-	map->mlx_ptr = mlx_init();
-	if (!map->mlx_ptr)
-		handle_error("mlx_init failed", -1, map);
-	map->mlx_win = mlx_new_window(map->mlx_ptr, map->width * 64, map->height
-			* 64, "so_long");
-	if (!map->mlx_win)
-		handle_error("mlx_new_window failed", -1, map);
-	mlx_hook(map->mlx_win, 17, 0, close_window, map);
-	mlx_key_hook(map->mlx_win, key_event, map);
 }

@@ -3,3 +3,4 @@ so_long
 extensions.json
 .DS_Store
 *.a
+.vscode
