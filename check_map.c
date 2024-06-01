@@ -6,7 +6,7 @@
 /*   By: btanir <btanir@student.42istanbul.com.tr>  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/18 13:39:04 by btanir            #+#    #+#             */
-/*   Updated: 2024/06/01 12:51:15 by btanir           ###   ########.fr       */
+/*   Updated: 2024/06/01 12:58:39 by btanir           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,7 +60,7 @@ static void	check_middle(t_map *map, int height, int width)
 	i = -1;
 	while (++i < height - 1)
 		if (map->map_copy[i][0] != WALL || map->map_copy[i][width - 1] != WALL)
-			handle_error("invalid borderm", -1, map);
+			handle_error("invalid border", -1, map);
 }
 
 static void	check_item(t_map *map)
@@ -81,7 +81,7 @@ static void	check_item(t_map *map)
 			if (map->map[j][i] == EXIT)
 				map->exit_count++;
 			if (ft_strchr(ELEMENTS, map->map[j][i]) == NULL)
-				handle_error("Invalid item2", -1, map);
+				handle_error("Invalid item", -1, map);
 			i++;
 		}
 		j++;
